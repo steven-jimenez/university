@@ -37,24 +37,30 @@ if ($resultado) {
 </head>
 
 <body>
-    <main class="flex">
+    <main class="flex relative">
         <section class="bg-slate-800 text-white w-72 h-3/6">
             <div class="flex border-b p-2">
                 <img class="rounded-full w-8 h-8 mr-2 ml-4 shadow-xl" src="./logo.jpg" />
                 <p class="pt-1 cursor-pointer">Universidad</p>
             </div>
             <div class="flex flex-col border-b p-3 ">
-                <p class="font-bold cursor-pointer">Alumno</p>
+                <p class="font-bold cursor-pointer">Administrador</p>
                 <p class="cursor-pointer "><?php echo $nombre ?></p>
             </div>
             <div class="flex flex-col justify-center items-center pt-4 gap-3">
-                <p class="font-bold pb-4 cursor-pointer">MENU ALUMNOS</p>
-                <p class="cursor-pointer"><i><span class="material-symbols-outlined">
-                            task
-                        </span></i> Ver Calificaciones</p>
-                <p class="cursor-pointer"><i><span class="material-symbols-outlined">
+                <p class="font-bold pb-4 cursor-pointer">MENU ADMINISTRACION</p>
+                <p class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
+                            manage_accounts
+                        </span></i> Permisos</p>
+                <p class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
+                            contacts
+                        </span></i> Maestros</p>
+                <p class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
+                            school
+                        </span></i>Alumnos</p>
+                <p class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
                             library_books
-                        </span></i> Administra tus clases</p>
+                        </span></i>Clases</p>
             </div>
             <div>
                 <br>
@@ -160,8 +166,14 @@ if ($resultado) {
                                 <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['email'] ?></td>
                                 <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['direccion'] ?></td>
                                 <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['date'] ?></td>
-                                <td class="border border-gray-700 px-4 py-2"><button onclick=deleteRow(this) class="text-red-600  cursor-pointer\"><span class="material-symbols-outlined">delete</span></button></td>
-
+                                <td class="border border-gray-700 px-4 py-2 gap-4">
+                                    <button class="mr-2 text-blue-600" onclick="openEditModal(<?php echo $mostrar['id']; ?>)">
+                                        <span class="material-symbols-outlined">edit_square</span>
+                                    </button>
+                                    <button onclick="deleteRow(<?php echo $mostrar['id']; ?>)" class="text-red-600 cursor-pointer mt-2">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </td>
                             </tr>
                         <?php
                         }
@@ -169,8 +181,29 @@ if ($resultado) {
                     </tbody>
                 </table>
             </div>
-
         </section>
+
+        <div id="editModal" class="fixed inset-0  justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
+            <div class="bg-white w-80 h-96 shadow-xl p-3 rounded-lg">
+                <span class="close font-bold text-xl cursor-pointer  top-3 right-3" onclick="closeModal()">&times;</span>
+                <h2 class="text-center mb-4">Editar Alumno</h2>
+                <form action="edit.php" method="post">
+                    <input type="hidden" id="editId" name="id">
+                    <div class="mb-3">
+                        <label for="editMatricula" class="block">Matricula</label>
+                        <input type="text" id="editMatricula" name="Matricula" class="border rounded-lg w-full p-2">
+                        <label for="editEmail" class="block">Email</label>
+                        <input type="text" id="editEmail" name="Email" class="border rounded-lg w-full p-2">
+                        <label for="editNombre" class="block">Nombre</label>
+                        <input type="text" id="editNombre" name="Nombre" class="border rounded-lg w-full p-2">
+                        <label for="editDireccion" class="block">Direccion</label>
+                        <input type="text" id="editDireccion" name="Direccion" class="border rounded-lg w-full p-2">
+                    </div>
+
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
 
         <script>
             function toggleProfileBar() {
