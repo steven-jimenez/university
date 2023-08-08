@@ -184,7 +184,7 @@ if ($resultado) {
         </section>
 
         <div id="editModal" class="fixed inset-0  justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
-            <div class="bg-white w-80 h-96 shadow-xl p-3 rounded-lg">
+            <div class="bg-white w-80 h-96 shadow-xl p-4 rounded-lg">
                 <span class="close font-bold text-xl cursor-pointer  top-3 right-3" onclick="closeModal()">&times;</span>
                 <h2 class="text-center mb-4">Editar Alumno</h2>
                 <form action="edit.php" method="post">
