@@ -83,7 +83,7 @@ if ($resultado) {
         </section>
         <section>
             <nav class="flex justify-between space-x-96 shadow-lg ">
-                <h1 class="pl-6 pr-96 pt-2">Home</h1>
+                <a class="pl-6 pr-96 pt-2 hover:text-blue-600" href="alumno.php">Home</a>
                 <div class="flex pt-2">
                     <div id="toggleUser" onclick="toggleProfileBar()" class="flex flex-col  cursor-pointer p-4">
                         <h1 class="flex  hover:bg-slate-500 p-1 rounded-lg"><?php echo $nombre ?> <i><span class="material-symbols-outlined">

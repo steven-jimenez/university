@@ -23,6 +23,23 @@ if ($resultado) {
 } else {
     echo "Error en la consulta: " . $conexion->error;
 }
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $matricula = $_POST["matricula"];
+    $correo = $_POST["correo"];
+    $password = $_POST["password"];
+    $nombre = $_POST["nombre"];
+    $direccion = $_POST["direccion"];
+    $fecha_nacimiento = $_POST["fecha_nacimiento"];
+
+    // Actualizar los datos en la base de datos
+    $query = "UPDATE usuarios SET matricula = '$matricula', correo = '$correo', password = '$password', nombre = '$nombre', direccion = '$direccion', fecha_nacimiento = '$fecha_nacimiento' WHERE id = tu_id_de_usuario";
+
+    if (mysqli_query($conn, $query)) {
+        echo "Cambios guardados correctamente.";
+    } else {
+        echo "Error al guardar los cambios: " . mysqli_error($conn);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +100,7 @@ if ($resultado) {
         </section>
         <section>
             <nav class="flex justify-between space-x-96 shadow-lg ">
-                <h1 class="pl-6 pr-96 pt-2">Home</h1>
+                <a class="pl-6 pr-96 pt-2 cursor-pointer hover:text-blue-600" href="alumno.php">Home</a>
                 <div class="flex    ">
                     <div id="toggleUser" onclick="toggleProfileBar()" class="flex flex-col  cursor-pointer p-4">
                         <h1 class="flex  hover:bg-slate-500 p-1 rounded-lg"><?php echo $nombre ?> <i><span class="material-symbols-outlined">
@@ -101,7 +118,36 @@ if ($resultado) {
                 </div>
             </nav>
             <div>
-                <h1 class="text-3xl ml-3 mt-3">Editar Perfil</h1>
+                <div class="flex justify-between pt-2 pl-3">
+                    <h1 class="text-3xl">Editar Perfil</h1>
+                    <div class="flex">
+                        <p class="text-blue-700 pr-2">Home</p>
+                        <p> / Clases
+                        <p>
+                    </div>
+                </div>
+
+                <form method="POST" action="alumno.php" class="mt-3 ml-3 flex flex-col">
+                    <label class="font-bold">Matrícula:</label>
+                    <input class="cursor-pointer border-2 rounded-lg" type="text" name="matricula"><br>
+
+                    <label class="font-bold">Correo:</label>
+                    <input class="cursor-pointer border-2 rounded-lg" type="email" name="correo"><br>
+
+                    <label class="font-bold">Contraseña:</label>
+                    <input class="cursor-pointer border-2 rounded-lg" type="password" name="password"><br>
+
+                    <label class="font-bold">Nombre Completo:</label>
+                    <input class="cursor-pointer border-2 rounded-lg" type="text" name="nombre"><br>
+
+                    <label class="font-bold">Dirección:</label>
+                    <input class="cursor-pointer border-2 rounded-lg" type="text" name="direccion"><br>
+
+                    <label class="font-bold">Fecha de Nacimiento:</label>
+                    <input class="cursor-pointer border-2 rounded-lg" type="date" name="fecha_nacimiento"><br>
+
+                    <input class="bg-blue-600 cursor-pointer text-white w-48 rounded-lg font-semibold p-1  mt-3" type="submit" value="Guardar Cambios">
+                </form>
             </div>
 
         </section>
