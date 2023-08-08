@@ -23,21 +23,22 @@ if ($resultado) {
 } else {
     echo "Error en la consulta: " . $conexion->error;
 }
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $matricula = $_POST["matricula"];
-    $correo = $_POST["correo"];
+    $email = $_POST["email"];
     $password = $_POST["password"];
     $nombre = $_POST["nombre"];
     $direccion = $_POST["direccion"];
-    $fecha_nacimiento = $_POST["fecha_nacimiento"];
+    $date = $_POST["date"];
 
     // Actualizar los datos en la base de datos
-    $query = "UPDATE usuarios SET matricula = '$matricula', correo = '$correo', password = '$password', nombre = '$nombre', direccion = '$direccion', fecha_nacimiento = '$fecha_nacimiento' WHERE id = tu_id_de_usuario";
+    $query = "UPDATE usuarios SET matricula = '$matricula', email = '$email', password = '$password', nombre = '$nombre', direccion = '$direccion', date = '$date' WHERE email = 'alumno@alumno'";
 
-    if (mysqli_query($conn, $query)) {
+    if ($conexion->query($query) === TRUE) {
         echo "Cambios guardados correctamente.";
     } else {
-        echo "Error al guardar los cambios: " . mysqli_error($conn);
+        echo "Error al guardar los cambios: " . $conexion->error;
     }
 }
 ?>
@@ -132,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <input class="cursor-pointer border-2 rounded-lg" type="text" name="matricula"><br>
 
                     <label class="font-bold">Correo:</label>
-                    <input class="cursor-pointer border-2 rounded-lg" type="email" name="correo"><br>
+                    <input class="cursor-pointer border-2 rounded-lg" type="email" name="email"><br>
 
                     <label class="font-bold">Contraseña:</label>
                     <input class="cursor-pointer border-2 rounded-lg" type="password" name="password"><br>
@@ -144,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <input class="cursor-pointer border-2 rounded-lg" type="text" name="direccion"><br>
 
                     <label class="font-bold">Fecha de Nacimiento:</label>
-                    <input class="cursor-pointer border-2 rounded-lg" type="date" name="fecha_nacimiento"><br>
+                    <input class="cursor-pointer border-2 rounded-lg" type="date" name="date"><br>
 
                     <input class="bg-blue-600 cursor-pointer text-white w-48 rounded-lg font-semibold p-1  mt-3" type="submit" value="Guardar Cambios">
                 </form>
