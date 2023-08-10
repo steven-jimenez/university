@@ -1,11 +1,13 @@
+console.log("Script loaded");
 var editModal = document.getElementById("editModal");
 var editIdInput = document.getElementById("editId");
 var editNombreInput = document.getElementById("editNombre");
 
-function openEditModal(id) {
+function openEditModal(id, nombre, matricula, email, direccion) {
   editIdInput.value = id;
-  editModal.style.display = "block";
-  var form = modal.querySelector("form");
+  editModal.style.display = "flex";
+
+  var form = editModal.querySelector("form");
   var idField = form.querySelector("#editId");
   var nombreField = form.querySelector("#editNombre");
   var matriculaField = form.querySelector("#editMatricula");
@@ -14,9 +16,12 @@ function openEditModal(id) {
 
   // Configurar los valores de los campos
   idField.value = id;
-  // ... Obtener los valores actuales de la fila en la tabla y asignarlos a los campos ...
+  nombreField.value = nombre;
+  matriculaField.value = matricula;
+  emailField.value = email;
+  direccionField.value = direccion;
 
-  modal.style.display = "block";
+  editModal.style.display = "block";
 }
 
 function closeModal() {

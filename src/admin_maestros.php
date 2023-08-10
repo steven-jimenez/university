@@ -108,16 +108,16 @@ if ($resultado) {
                 </div>
             </nav>
             <div class="flex justify-between pt-2 pl-3">
-                <h1 class="text-3xl">Lista de Alumnos</h1>
+                <h1 class="text-3xl">Lista de Maestros</h1>
                 <div class="flex">
                     <p class="text-blue-700 pr-2">Home</p>
-                    <p> / Alumnos
+                    <p> / Maestros
                     <p>
                 </div>
             </div>
             <div class="flex justify-end mt-4">
                 <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg " onclick="openAddModal()">
-                    Agregar Alumno
+                    Agregar Maestro
                 </button>
             </div>
             <div class="flex justify-between mt-3 ">
@@ -140,11 +140,11 @@ if ($resultado) {
                     <thead>
                         <tr>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">#</th>
-                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Matricula</th>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Nombre</th>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Email</th>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Direccion</th>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Fec. de Nacimiento</th>
+                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Clase Asignada</th>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Accion</th>
                         </tr>
 
@@ -159,7 +159,7 @@ if ($resultado) {
                         }
 
                         // Consulta para obtener los usuarios con el rol de maestro
-                        $query = "SELECT id, nombre, matricula, email, direccion, date FROM usuarios WHERE rol = 'alumno'";
+                        $query = "SELECT id, nombre, matricula, email, direccion, date FROM usuarios WHERE rol = 'maestro'";
 
                         $result = $conexion->query($query);
 
@@ -168,11 +168,11 @@ if ($resultado) {
                         ?>
                                 <tr>
                                     <td class="border border-gray-700 px-4 py-2"><?php echo  $mostrar['id']  ?></td>
-                                    <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['matricula'] ?></td>
                                     <td class="border border-gray-700 px-4 py-2"><?php echo  $mostrar['nombre']  ?></td>
                                     <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['email'] ?></td>
                                     <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['direccion'] ?></td>
                                     <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['date'] ?></td>
+                                    <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['clase'] ?></td>
                                     <td class="border border-gray-700 px-4 py-2 gap-4">
                                         <button class="mr-2 text-blue-600" onclick="openEditModal(<?php echo $mostrar['id']; ?>)">
                                             <span class="material-symbols-outlined">edit_square</span>
@@ -198,12 +198,12 @@ if ($resultado) {
         <div id="editModal" class="fixed inset-0  justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
             <div class="bg-white w-80 h-96 shadow-xl p-4 rounded-lg">
                 <span class="close font-bold text-xl cursor-pointer  top-3 right-3" onclick="closeModal()">&times;</span>
-                <h2 class="text-center mb-4">Editar Alumno</h2>
+                <h2 class="text-center mb-4">Editar Maestro</h2>
                 <form action="edit.php" method="post">
                     <input type="hidden" id="editId" name="id">
                     <div class="mb-3">
-                        <label for="editMatricula" class="block">Matricula</label>
-                        <input type="text" id="editMatricula" name="Matricula" class="border rounded-lg w-full p-2">
+                        <label for="editClase" class="block">Clase Asignada</label>
+                        <input type="text" id="editClase" name="Clase" class="border rounded-lg w-full p-2">
                         <label for="editEmail" class="block">Email</label>
                         <input type="text" id="editEmail" name="Email" class="border rounded-lg w-full p-2">
                         <label for="editNombre" class="block">Nombre</label>
@@ -220,11 +220,11 @@ if ($resultado) {
         <div id="addModal" class="fixed inset-0 justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
             <div class="bg-white w-80 h-96 shadow-xl p-4 rounded-lg">
                 <span class="close font-bold text-xl cursor-pointer top-3 right-3" onclick="closeAddModal()">&times;</span>
-                <h2 class="text-center mb-4">Agregar Alumno</h2>
+                <h2 class="text-center mb-4">Agregar Maestro</h2>
                 <form action="#" method="post">
                     <div class="mb-3">
-                        <label for="addMatricula" class="block">Matricula</label>
-                        <input type="text" id="addMatricula" name="Matricula" class="border rounded-lg w-full p-2">
+                        <label for="editClase" class="block">Clase Asignada</label>
+                        <input type="text" id="editClase" name="Clase" class="border rounded-lg w-full p-2">
                         <label for="addEmail" class="block">Email</label>
                         <input type="text" id="addEmail" name="Email" class="border rounded-lg w-full p-2">
                         <label for="addNombre" class="block">Nombre</label>
@@ -260,6 +260,7 @@ if ($resultado) {
             }
         </script>
         <?php include "add.php"; ?>
+        <?php include "edit.php"; ?>
 
     </main>
 

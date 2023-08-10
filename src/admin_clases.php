@@ -1,14 +1,15 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'maestro') {
+if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'admin') {
     header("Location: index.php");
     exit();
 }
 
-require "conexion.php"; // Incluir el archivo de conexión
+include "conexion.php";
 
-$query = "SELECT nombre FROM usuarios WHERE email = 'maestro@maestro'";
+
+$query = "SELECT nombre FROM usuarios WHERE email = 'admin@admin'";
 $resultado = $conexion->query($query);
 
 $nombre = "";
@@ -24,7 +25,6 @@ if ($resultado) {
     echo "Error en la consulta: " . $conexion->error;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +34,7 @@ if ($resultado) {
     <link href="./output.css" rel="stylesheet">
     <script src="./remove.js" defer></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Maestro</title>
+    <title>Administrador</title>
 </head>
 
 <body>
@@ -45,15 +45,23 @@ if ($resultado) {
                 <p class="pt-1 cursor-pointer">Universidad</p>
             </div>
             <div class="flex flex-col border-b p-3 ">
-                <p class="font-bold cursor-pointer">Maestro</p>
+                <p class="font-bold cursor-pointer">Administrador</p>
                 <p class="cursor-pointer "><?php echo $nombre ?></p>
             </div>
             <div class="flex flex-col justify-center items-center pt-4 gap-3">
-                <p class="font-bold pb-4 cursor-pointer">MENU MAESTROS</p>
-                <p class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
+                <p class="font-bold pb-4 cursor-pointer">MENU ADMINISTRACION</p>
+                <a href="permisos.php" class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
+                            manage_accounts
+                        </span></i> Permisos</a>
+                <a href="admin_maestros.php" class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
+                            contacts
+                        </span></i> Maestros</a>
+                <a href="admin.php" class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
                             school
                         </span></i>Alumnos</p>
-
+                    <a href="admin_clases.php" class="cursor-pointer hover:border-b-white"><i class="pr-2"><span class="material-symbols-outlined">
+                                library_books
+                            </span></i>Clases</a>
             </div>
             <div>
                 <br>
@@ -100,12 +108,17 @@ if ($resultado) {
                 </div>
             </nav>
             <div class="flex justify-between pt-2 pl-3">
-                <h1 class="text-3xl">Alumnos de la clase de Matematicas</h1>
+                <h1 class="text-3xl">Lista de Clases</h1>
                 <div class="flex">
                     <p class="text-blue-700 pr-2">Home</p>
-                    <p> / Maestro
+                    <p> / Clases
                     <p>
                 </div>
+            </div>
+            <div class="flex justify-end mt-4">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg " onclick="openAddModal()">
+                    Agregar Clases
+                </button>
             </div>
             <div class="flex justify-between mt-3 ">
                 <div class="flex gap-6 bg-slate-600 text-white w-96 pl-3 ml-3 mt-3 rounded-lg">
@@ -127,9 +140,9 @@ if ($resultado) {
                     <thead>
                         <tr>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">#</th>
-                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Clase</th>
-                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Calificacion</th>
-                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Mensajes</th>
+                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Clases</th>
+                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Maestro</th>
+                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Alumnos Inscritos</th>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Accion</th>
                         </tr>
 
@@ -143,29 +156,24 @@ if ($resultado) {
                             die("Error de conexión: " . $conexion->connect_error);
                         }
 
-                        // Consulta para obtener los usuarios con el rol de maestro
-                        $query = "SELECT id, nombre, matricula, email, direccion, date FROM usuarios WHERE rol = 'alumno'";
-
+                        // Consulta para obtener las clases
+                        $query = "SELECT id, nombre FROM clases";
                         $result = $conexion->query($query);
 
                         if ($result) {
                             while ($mostrar = $result->fetch_assoc()) {
                         ?>
                                 <tr>
-                                    <td class="border border-gray-700 px-4 py-2"><?php echo  $mostrar['id']  ?></td>
-                                    <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['nombre'] ?></td>
-                                    <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['calificacion'] ?></td>
-                                    <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['mensaje'] ?></td>
+                                    <td class="border border-gray-700 px-4 py-2"><span class="font-bold"><?php echo  $mostrar['id']  ?></span></td>
+                                    <td class="border border-gray-700 px-4 py-2"><span class=""><?php echo $mostrar['nombre'] ?></span></td>
+                                    <td class="border border-gray-700 px-4 py-2"><span class=""><?php echo $mostrar['usuarios_id'] ?></span></td>
+                                    <td class="border border-gray-700 px-4 py-2"><span class="font-bold text-green-600 "><?php echo $mostrar['alumnos_id'] ?></span></td>
                                     <td class="border border-gray-700 px-4 py-2 gap-4">
-                                        <button class="mr-2 text-blue-600">
-                                            <span class="material-symbols-outlined">
-                                                note_add
-                                            </span>
+                                        <button class="mr-2 text-blue-600" onclick="openEditModal(<?php echo $mostrar['id']; ?>)">
+                                            <span class="material-symbols-outlined">edit_square</span>
                                         </button>
-                                        <button class="text-blue-600 cursor-pointer mt-2 ">
-                                            <span class="material-symbols-outlined">
-                                                send
-                                            </span>
+                                        <button onclick="deleteRow(<?php echo $mostrar['id']; ?>)" class="text-red-600 cursor-pointer mt-2">
+                                            <span class="material-symbols-outlined">delete</span>
                                         </button>
                                     </td>
                                 </tr>
@@ -182,6 +190,41 @@ if ($resultado) {
             </div>
         </section>
 
+        <div id="editModal" class="fixed inset-0  justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
+            <div class="bg-white w-80 h-96 shadow-xl p-4 rounded-lg">
+                <span class="close font-bold text-xl cursor-pointer  top-3 right-3" onclick="closeModal()">&times;</span>
+                <h2 class="text-center mb-4">Editar Clase</h2>
+                <form action="edit.php" method="post">
+                    <input type="hidden" id="editId" name="id">
+                    <div class="mb-3">
+                        <label for="editClase" class="block">Nombre de la Clase</label>
+                        <input type="text" id="editClase" name="Clase" class="border rounded-lg w-full p-2">
+                        <label for="editMaestro" class="block">Nombre del Maestro</label>
+                        <input type="text" id="editMaestro" name="Maestro" class="border rounded-lg w-full p-2">
+                    </div>
+
+                    <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="addModal" class="fixed inset-0 justify-center items-center bg-gray-800 bg-opacity-50 z-50 hidden">
+            <div class="bg-white w-80 h-96 shadow-xl p-4 rounded-lg">
+                <span class="close font-bold text-xl cursor-pointer top-3 right-3" onclick="closeAddModal()">&times;</span>
+                <h2 class="text-center mb-4">Agregar Clase</h2>
+                <form action="#" method="post">
+                    <div class="mb-3">
+                        <label for="editClase" class="block">Nombre de la Clase</label>
+                        <input type="text" id="editClase" name="Clase" class="border rounded-lg w-full p-2">
+                        <label for="editMaestro" class="block">Nombre del Maestro</label>
+                        <input type="text" id="editMaestro" name="Maestro" class="border rounded-lg w-full p-2">
+                    </div>
+                    <button type="submit" name="add" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+
+
 
         <script>
             function toggleProfileBar() {
@@ -192,9 +235,21 @@ if ($resultado) {
                     profileBar.style.display = "none";
                 }
             }
+
+            function openAddModal() {
+                var addModal = document.getElementById("addModal");
+                addModal.style.display = "flex";
+            }
+
+            function closeAddModal() {
+                var addModal = document.getElementById("addModal");
+                addModal.style.display = "none";
+            }
         </script>
+        <?php include "add.php"; ?>
 
     </main>
+
 </body>
 
 </html>
