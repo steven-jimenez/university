@@ -101,7 +101,7 @@ if ($resultado) {
                 </div>
             </nav>
             <div class="flex justify-between pt-2 pl-3">
-                <h1 class="text-3xl">Calificaciones y mensajes de tus clases</h1>
+                <h1 class="text-3xl">Esquema de Clases</h1>
                 <div class="flex">
                     <p class="text-blue-700 pr-2">Home</p>
                     <p> / Clases
@@ -117,10 +117,7 @@ if ($resultado) {
                                 arrow_drop_down
                             </span></i></p>
                 </div>
-                <div class="flex mt-3">
-                    <p class="pr-2">Search :</p>
-                    <input class="w-32 h-8 border ">
-                </div>
+
             </div>
 
             <div>
@@ -129,8 +126,7 @@ if ($resultado) {
                         <tr>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">#</th>
                             <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Clase</th>
-                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Calificacion</th>
-                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Mensajes</th>
+                            <th class="bg-gray-700 border border-gray-700 text-white px-4 py-2">Darse de baja</th>
                         </tr>
 
                     </thead>
@@ -153,8 +149,11 @@ if ($resultado) {
                             <tr>
                                 <td class="border border-gray-700 px-4 py-2"><?php echo  $mostrar['id']  ?></td>
                                 <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['nombre'] ?></td>
-                                <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['calificacion'] ?></td>
-                                <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['mensaje'] ?></td>
+                                <td class="border border-gray-700 px-4 py-2 gap-4">
+                                    <button onclick="deleteRow(<?php echo $mostrar['id']; ?>)" class="text-red-600 cursor-pointer mt-2">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </td>
 
                             </tr>
                         <?php
