@@ -1,24 +1,30 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['rol']) || $_SESSION['rol'] !== 'alumno') {
+if (!isset($_SESSION['rol'])) {
     header("Location: index.php");
     exit();
 }
 
-require "conexion.php"; // Incluir el archivo de conexión
+include "conexion.php";
 
-$query = "SELECT nombre FROM usuarios WHERE email = 'alumno@alumno'";
+$email = $_SESSION['email']; // Obtener el email del usuario actual
+
+$query = "SELECT id, nombre, matricula, email, direccion, date FROM usuarios WHERE email = '$email'";
 $resultado = $conexion->query($query);
 
 $nombre = "";
+$matricula = "";
+$direccion = "";
+$date = "";
 
 if ($resultado) {
     if ($resultado->num_rows > 0) {
         $fila = $resultado->fetch_assoc();
         $nombre = $fila["nombre"];
-    } else {
-        echo "No se encontraron registros en la base de datos.";
+        $matricula = $fila["matricula"];
+        $direccion = $fila["direccion"];
+        $date = $fila["date"];
     }
 } else {
     echo "Error en la consulta: " . $conexion->error;
@@ -26,14 +32,11 @@ if ($resultado) {
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $matricula = $_POST["matricula"];
-    $email = $_POST["email"];
-    $password = $_POST["password"];
-    $nombre = $_POST["nombre"];
     $direccion = $_POST["direccion"];
     $date = $_POST["date"];
 
     // Actualizar los datos en la base de datos
-    $query = "UPDATE usuarios SET matricula = '$matricula', email = '$email', password = '$password', nombre = '$nombre', direccion = '$direccion', date = '$date' WHERE email = 'alumno@alumno'";
+    $query = "UPDATE usuarios SET matricula = '$matricula', direccion = '$direccion', date = '$date' WHERE email = '$email'";
 
     if ($conexion->query($query) === TRUE) {
         echo "Cambios guardados correctamente.";
@@ -62,17 +65,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <p class="pt-1 cursor-pointer">Universidad</p>
             </div>
             <div class="flex flex-col border-b p-3 ">
-                <p class="font-bold cursor-pointer">Alumno</p>
+                <p class="font-bold cursor-pointer">Mi Perfil</p>
                 <p class="cursor-pointer "><?php echo $nombre ?></p>
             </div>
             <div class="flex flex-col justify-center items-center pt-4 gap-3">
-                <p class="font-bold pb-4 cursor-pointer">MENU ALUMNOS</p>
-                <p class="cursor-pointer"><i><span class="material-symbols-outlined">
-                            task
-                        </span></i> Ver Calificaciones</p>
-                <p class="cursor-pointer"><i><span class="material-symbols-outlined">
-                            library_books
-                        </span></i> Administra tus clases</p>
+                <p class="font-bold pb-4 cursor-pointer">MENU</p>
+
             </div>
             <div>
                 <br>
