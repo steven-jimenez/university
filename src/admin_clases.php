@@ -157,7 +157,7 @@ if ($resultado) {
                         }
 
                         // Consulta para obtener las clases
-                        $query = "SELECT id, nombre FROM clases";
+                        $query = "SELECT id, nombre, maestro FROM clases";
                         $result = $conexion->query($query);
 
                         if ($result) {
@@ -166,7 +166,7 @@ if ($resultado) {
                                 <tr>
                                     <td class="border border-gray-700 px-4 py-2"><span class="font-bold"><?php echo  $mostrar['id']  ?></span></td>
                                     <td class="border border-gray-700 px-4 py-2"><span class=""><?php echo $mostrar['nombre'] ?></span></td>
-                                    <td class="border border-gray-700 px-4 py-2"><span class=""><?php echo $mostrar['usuarios_id'] ?></span></td>
+                                    <td class="border border-gray-700 px-4 py-2"><span class=""><?php echo $mostrar['maestro'] ?></span></td>
                                     <td class="border border-gray-700 px-4 py-2"><span class="font-bold text-green-600 "><?php echo $mostrar['alumnos_id'] ?></span></td>
                                     <td class="border border-gray-700 px-4 py-2 gap-4">
                                         <button class="mr-2 text-blue-600" onclick="openEditModal(<?php echo $mostrar['id']; ?>)">
@@ -214,12 +214,12 @@ if ($resultado) {
                 <h2 class="text-center mb-4">Agregar Clase</h2>
                 <form action="#" method="post">
                     <div class="mb-3">
-                        <label for="editClase" class="block">Nombre de la Clase</label>
-                        <input type="text" id="editClase" name="Clase" class="border rounded-lg w-full p-2">
-                        <label for="editMaestro" class="block">Nombre del Maestro</label>
-                        <input type="text" id="editMaestro" name="Maestro" class="border rounded-lg w-full p-2">
+                        <label for="Clase" class="block">Nombre de la Clase</label>
+                        <input type="text" name="Clase" class="border rounded-lg w-full p-2">
+                        <label for="Maestro" class="block">Nombre del Maestro</label>
+                        <input type="text" name="Maestro" class="border rounded-lg w-full p-2">
                     </div>
-                    <button type="submit" name="add" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Guardar Cambios</button>
+                    <button type="submit" name="add_clases" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Guardar Cambios</button>
                 </form>
             </div>
         </div>
@@ -246,7 +246,7 @@ if ($resultado) {
                 addModal.style.display = "none";
             }
         </script>
-        <?php include "add.php"; ?>
+        <?php include "add_clase.php"; ?>
 
     </main>
 
