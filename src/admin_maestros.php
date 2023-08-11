@@ -159,7 +159,7 @@ if ($resultado) {
                         }
 
                         // Consulta para obtener los usuarios con el rol de maestro
-                        $query = "SELECT id, nombre, matricula, email, direccion, date FROM usuarios WHERE rol = 'maestro'";
+                        $query = "SELECT id, nombre, clase, email, direccion, date FROM usuarios WHERE rol = 'maestro'";
 
                         $result = $conexion->query($query);
 
