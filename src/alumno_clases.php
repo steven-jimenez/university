@@ -33,6 +33,7 @@ if ($resultado) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./output.css" rel="stylesheet">
     <script src="./remove.js" defer></script>
+    <script src="./inscripcion.js" defer></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Alumno</title>
 </head>
@@ -150,10 +151,13 @@ if ($resultado) {
                             <tr>
                                 <td class="border border-gray-700 px-4 py-2"><?php echo  $mostrar['id']  ?></td>
                                 <td class="border border-gray-700 px-4 py-2"><?php echo $mostrar['nombre'] ?></td>
-                                <td class="border border-gray-700 px-4 py-2 gap-4">
-                                    <button onclick="deleteRow(<?php echo $mostrar['id']; ?>)" class="text-red-600 cursor-pointer mt-2">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
+                                <td class="border border-gray-700 px-4 py-2">
+                                    <?php
+                                    echo '<button onclick="inscribirClase(' . $mostrar['id'] . ')" class="text-blue-600 cursor-pointer mt-2 pr-3"><span class="material-symbols-outlined">
+                                    add_circle
+                                    </span></button>';
+                                    echo '<button onclick="darDeBajaClase(' . $mostrar['id'] . ')" class="text-red-600 cursor-pointer mt-2 pl-3"><span class="material-symbols-outlined">delete</span></button>';
+                                    ?>
                                 </td>
 
                             </tr>

@@ -192,8 +192,8 @@ if ($resultado) {
                     <input type="hidden" id="editId" name="id">
                     <div class="mb-3 gap-4">
                         <label for="editEmail" class="block">Email</label>
-                        <input type="text" id="editEmail" name="Email" class="border rounded-lg w-full p-2">
-                        <label for="editPermiso" class="block">Permiso</label>
+                        <input type="text" id="editEmail" name="Email" class="border rounded-lg w-full p-2" value="<?php echo $mostrar['email'] ?>">
+                        <label for=" editPermiso" class="block">Permiso</label>
                         <select type="text" id="editPermiso" name="Permiso" class="border rounded-lg w-full p-2">
                             <option value="admin">Admin</option>
                             <option value="maestro">Maestro</option>
