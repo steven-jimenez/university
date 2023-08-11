@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-08-2023 a las 21:58:48
+-- Tiempo de generación: 10-08-2023 a las 22:04:54
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -41,9 +41,8 @@ CREATE TABLE `alumnos_clases` (
 
 CREATE TABLE `calificaciones` (
   `id` int(11) NOT NULL,
-  `id_alumno` int(11) DEFAULT NULL,
-  `id_clase` int(11) DEFAULT NULL,
-  `calificacion` decimal(4,2) DEFAULT NULL
+  `usuario_id` int(11) DEFAULT NULL,
+  `calificacion` decimal(5,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -54,20 +53,22 @@ CREATE TABLE `calificaciones` (
 
 CREATE TABLE `clases` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(255) NOT NULL
+  `nombre` varchar(255) NOT NULL,
+  `usuarios_id` int(11) DEFAULT NULL,
+  `alumnos_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `clases`
 --
 
-INSERT INTO `clases` (`id`, `nombre`) VALUES
-(1, 'matematicas'),
-(2, 'Quimica'),
-(3, 'Historia'),
-(4, 'Literatura'),
-(5, 'Navegacion Interestelar'),
-(6, 'Viajes en el Tiempo');
+INSERT INTO `clases` (`id`, `nombre`, `usuarios_id`, `alumnos_id`) VALUES
+(1, 'matematicas', NULL, NULL),
+(2, 'Quimica', NULL, NULL),
+(3, 'Historia', NULL, NULL),
+(4, 'Literatura', NULL, NULL),
+(5, 'Navegacion Interestelar', NULL, NULL),
+(6, 'Viajes en el Tiempo', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -83,17 +84,19 @@ CREATE TABLE `usuarios` (
   `rol` enum('admin','maestro','alumno') NOT NULL,
   `matricula` varchar(20) DEFAULT NULL,
   `direccion` varchar(200) DEFAULT NULL,
-  `date` varchar(200) DEFAULT NULL
+  `date` varchar(200) DEFAULT NULL,
+  `estado` varchar(255) DEFAULT 'Activo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `matricula`, `direccion`, `date`) VALUES
-(1, 'admin', 'admin@admin', 'admin', 'admin', NULL, NULL, NULL),
-(2, 'maestro', 'maestro@maestro', 'maestro', 'maestro', NULL, NULL, NULL),
-(3, 'alumno', 'alumno@alumno', 'alumno', 'alumno', NULL, NULL, NULL);
+INSERT INTO `usuarios` (`id`, `nombre`, `email`, `password`, `rol`, `matricula`, `direccion`, `date`, `estado`) VALUES
+(1, 'admin', 'admin@admin', 'admin', 'admin', NULL, NULL, NULL, 'Activo'),
+(2, 'maestro', 'maestro@maestro', 'maestro', 'maestro', NULL, NULL, NULL, 'Activo'),
+(3, 'alumno', 'alumno@alumno', 'alumno', 'alumno', NULL, NULL, NULL, 'Activo'),
+(4, 'Mario Orlando', 'mario@alumno', 'mario', 'alumno', '789789', 'solo el sabe', '789', 'Activo');
 
 --
 -- Índices para tablas volcadas
@@ -112,14 +115,14 @@ ALTER TABLE `alumnos_clases`
 --
 ALTER TABLE `calificaciones`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_alumno` (`id_alumno`),
-  ADD KEY `id_clase` (`id_clase`);
+  ADD KEY `usuario_id` (`usuario_id`);
 
 --
 -- Indices de la tabla `clases`
 --
 ALTER TABLE `clases`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuarios_id` (`usuarios_id`);
 
 --
 -- Indices de la tabla `usuarios`
@@ -138,12 +141,6 @@ ALTER TABLE `alumnos_clases`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `calificaciones`
---
-ALTER TABLE `calificaciones`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `clases`
 --
 ALTER TABLE `clases`
@@ -153,7 +150,7 @@ ALTER TABLE `clases`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -170,8 +167,14 @@ ALTER TABLE `alumnos_clases`
 -- Filtros para la tabla `calificaciones`
 --
 ALTER TABLE `calificaciones`
-  ADD CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `usuarios` (`id`),
-  ADD CONSTRAINT `calificaciones_ibfk_2` FOREIGN KEY (`id_clase`) REFERENCES `clases` (`id`);
+  ADD CONSTRAINT `calificaciones_ibfk_1` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+
+--
+-- Filtros para la tabla `clases`
+--
+ALTER TABLE `clases`
+  ADD CONSTRAINT `clases_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `clases_ibfk_2` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

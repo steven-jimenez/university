@@ -1,25 +1,17 @@
 console.log("Script loaded");
 var editModal = document.getElementById("editModal");
 var editIdInput = document.getElementById("editId");
+var editMatriculaInput = document.getElementById("editMatricula");
+var editEmailInput = document.getElementById("editEmail");
 var editNombreInput = document.getElementById("editNombre");
+var editDireccionInput = document.getElementById("editDireccion");
 
 function openEditModal(id, nombre, matricula, email, direccion) {
   editIdInput.value = id;
-  editModal.style.display = "flex";
-
-  var form = editModal.querySelector("form");
-  var idField = form.querySelector("#editId");
-  var nombreField = form.querySelector("#editNombre");
-  var matriculaField = form.querySelector("#editMatricula");
-  var emailField = form.querySelector("#editEmail");
-  var direccionField = form.querySelector("#editDireccion");
-
-  // Configurar los valores de los campos
-  idField.value = id;
-  nombreField.value = nombre;
-  matriculaField.value = matricula;
-  emailField.value = email;
-  direccionField.value = direccion;
+  editMatriculaInput.value = matricula;
+  editEmailInput.value = email;
+  editNombreInput.value = nombre;
+  editDireccionInput.value = direccion;
 
   editModal.style.display = "block";
 }

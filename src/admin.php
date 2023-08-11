@@ -203,13 +203,13 @@ if ($resultado) {
                     <input type="hidden" id="editId" name="id">
                     <div class="mb-3">
                         <label for="editMatricula" class="block">Matricula</label>
-                        <input type="text" id="editMatricula" name="Matricula" class="border rounded-lg w-full p-2">
+                        <input type="text" id="editMatricula" name="Matricula" class="border rounded-lg w-full p-2" value="">
                         <label for="editEmail" class="block">Email</label>
-                        <input type="text" id="editEmail" name="Email" class="border rounded-lg w-full p-2">
+                        <input type="text" id="editEmail" name="Email" class="border rounded-lg w-full p-2" value="">
                         <label for="editNombre" class="block">Nombre</label>
-                        <input type="text" id="editNombre" name="Nombre" class="border rounded-lg w-full p-2">
+                        <input type="text" id="editNombre" name="Nombre" class="border rounded-lg w-full p-2" value="">
                         <label for="editDireccion" class="block">Direccion</label>
-                        <input type="text" id="editDireccion" name="Direccion" class="border rounded-lg w-full p-2">
+                        <input type="text" id="editDireccion" name="Direccion" class="border rounded-lg w-full p-2" value="">
                     </div>
 
                     <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Guardar Cambios</button>
@@ -223,14 +223,14 @@ if ($resultado) {
                 <h2 class="text-center mb-4">Agregar Alumno</h2>
                 <form action="#" method="post">
                     <div class="mb-3">
-                        <label for="addMatricula" class="block">Matricula</label>
-                        <input type="text" id="addMatricula" name="Matricula" class="border rounded-lg w-full p-2">
-                        <label for="addEmail" class="block">Email</label>
-                        <input type="text" id="addEmail" name="Email" class="border rounded-lg w-full p-2">
-                        <label for="addNombre" class="block">Nombre</label>
-                        <input type="text" id="addNombre" name="Nombre" class="border rounded-lg w-full p-2">
-                        <label for="addDireccion" class="block">Direccion</label>
-                        <input type="text" id="addDireccion" name="Direccion" class="border rounded-lg w-full p-2">
+                        <label for="Matricula" class="block">Matricula</label>
+                        <input type="text" name="add_matricula" class="border rounded-lg w-full p-2">
+                        <label for="Email" class="block">Email</label>
+                        <input type="text" name="add_email" class="border rounded-lg w-full p-2">
+                        <label for="Nombre" class="block">Nombre</label>
+                        <input type="text" name="add_nombre" class="border rounded-lg w-full p-2">
+                        <label for="Direccion" class="block">Direccion</label>
+                        <input type="text" name="add_direccion" class="border rounded-lg w-full p-2">
                     </div>
                     <button type="submit" name="add" class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">Guardar Cambios</button>
                 </form>
@@ -259,7 +259,8 @@ if ($resultado) {
                 addModal.style.display = "none";
             }
         </script>
-        <?php include "add.php"; ?>
+        <?php include "add_alumno.php"; ?>
+        <?php include "edit_alumno.php"; ?>
 
     </main>
 
